@@ -1,0 +1,4 @@
+name: projects/royalty-group-llc/policies/iam.allowedPolicyMemberDomains
+spec:
+  rules:
+  - allowAll: true
