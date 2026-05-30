@@ -8,7 +8,7 @@ import Link from "next/link";
 
 export default function LoginPage() {
   const [error, setError] = useState("");
-  const [portalType, setPortalType] = useState<"resident" | "navigator" | "admin">("resident");
+  const [portalType, setPortalType] = useState<"resident" | "navigator" | "partner" | "admin">("resident");
   const router = useRouter();
 
   const handleGoogleSignIn = async () => {
@@ -25,6 +25,8 @@ export default function LoginPage() {
           return;
         }
         router.push("/admin");
+      } else if (portalType === "partner") {
+        router.push("/partner");
       } else if (portalType === "resident") {
         router.push("/portal");
       } else {
@@ -69,6 +71,16 @@ export default function LoginPage() {
               }`}
             >
               Navigator
+            </button>
+            <button
+              onClick={() => setPortalType("partner")}
+              className={`flex-1 py-2 text-sm font-medium rounded-md transition-colors ${
+                portalType === "partner" 
+                  ? "bg-white text-primary shadow-sm" 
+                  : "text-gray-500 hover:text-gray-700"
+              }`}
+            >
+              Partner
             </button>
             <button
               onClick={() => setPortalType("admin")}
