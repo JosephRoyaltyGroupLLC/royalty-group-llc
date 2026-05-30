@@ -1,17 +1,47 @@
 "use client";
 
 import { useState } from "react";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 
 export default function ContactPage() {
   const [status, setStatus] = useState<"idle" | "submitting" | "success">("idle");
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    subject: "General Inquiry",
+    message: ""
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("submitting");
-    // Simulate form submission
-    setTimeout(() => {
+    
+    try {
+      await addDoc(collection(db, "contact_messages"), {
+        ...formData,
+        status: "Unread",
+        createdAt: serverTimestamp()
+      });
       setStatus("success");
-    }, 1500);
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        subject: "General Inquiry",
+        message: ""
+      });
+    } catch (error) {
+      console.error("Error submitting form: ", error);
+      setStatus("idle");
+      alert("Failed to submit message. Please try again.");
+    }
   };
 
   return (
@@ -103,20 +133,20 @@ export default function ContactPage() {
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">First Name</label>
-                      <input required type="text" className="w-full p-2 border border-gray-300 rounded-md focus:ring-secondary focus:border-secondary" />
+                      <input name="firstName" value={formData.firstName} onChange={handleChange} required type="text" className="w-full p-2 border border-gray-300 rounded-md focus:ring-secondary focus:border-secondary" />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
-                      <input required type="text" className="w-full p-2 border border-gray-300 rounded-md focus:ring-secondary focus:border-secondary" />
+                      <input name="lastName" value={formData.lastName} onChange={handleChange} required type="text" className="w-full p-2 border border-gray-300 rounded-md focus:ring-secondary focus:border-secondary" />
                     </div>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
-                    <input required type="email" className="w-full p-2 border border-gray-300 rounded-md focus:ring-secondary focus:border-secondary" />
+                    <input name="email" value={formData.email} onChange={handleChange} required type="email" className="w-full p-2 border border-gray-300 rounded-md focus:ring-secondary focus:border-secondary" />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Subject</label>
-                    <select className="w-full p-2 border border-gray-300 rounded-md focus:ring-secondary focus:border-secondary">
+                    <select name="subject" value={formData.subject} onChange={handleChange} className="w-full p-2 border border-gray-300 rounded-md focus:ring-secondary focus:border-secondary">
                       <option>General Inquiry</option>
                       <option>Housing Application Status</option>
                       <option>Schedule a Tour</option>
@@ -125,7 +155,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Message</label>
-                    <textarea required rows={5} className="w-full p-2 border border-gray-300 rounded-md focus:ring-secondary focus:border-secondary"></textarea>
+                    <textarea name="message" value={formData.message} onChange={handleChange} required rows={5} className="w-full p-2 border border-gray-300 rounded-md focus:ring-secondary focus:border-secondary"></textarea>
                   </div>
                   <button 
                     type="submit" 

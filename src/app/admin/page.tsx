@@ -16,6 +16,7 @@ export default function AdminPortal() {
   const [residentApplications, setResidentApplications] = useState<any[]>([]);
   const [maintenanceRequests, setMaintenanceRequests] = useState<any[]>([]);
   const [announcements, setAnnouncements] = useState<any[]>([]);
+  const [contactMessages, setContactMessages] = useState<any[]>([]);
   
   const [newAnnouncement, setNewAnnouncement] = useState({ title: "", content: "" });
   const [submittingAnn, setSubmittingAnn] = useState(false);
@@ -65,6 +66,19 @@ export default function AdminPortal() {
         return timeB - timeA;
       });
       setAnnouncements(annData);
+
+      // Fetch Contact Messages
+      const msgSnapshot = await getDocs(collection(db, "contact_messages"));
+      const msgData: any[] = [];
+      msgSnapshot.forEach((doc) => {
+        msgData.push({ id: doc.id, ...doc.data() });
+      });
+      msgData.sort((a, b) => {
+        const timeA = a.createdAt?.seconds || 0;
+        const timeB = b.createdAt?.seconds || 0;
+        return timeB - timeA;
+      });
+      setContactMessages(msgData);
 
     } catch (error) {
       console.error("Error fetching admin data", error);
@@ -194,6 +208,7 @@ export default function AdminPortal() {
           <button onClick={() => setActiveTab("applications")} className={`flex-1 py-4 px-6 text-center font-bold text-sm uppercase tracking-wider transition-colors ${activeTab === "applications" ? "bg-primary text-white" : "text-gray-600 hover:bg-gray-50"}`}>Applications</button>
           <button onClick={() => setActiveTab("maintenance")} className={`flex-1 py-4 px-6 text-center font-bold text-sm uppercase tracking-wider transition-colors ${activeTab === "maintenance" ? "bg-primary text-white" : "text-gray-600 hover:bg-gray-50"}`}>Maintenance Requests</button>
           <button onClick={() => setActiveTab("announcements")} className={`flex-1 py-4 px-6 text-center font-bold text-sm uppercase tracking-wider transition-colors ${activeTab === "announcements" ? "bg-primary text-white" : "text-gray-600 hover:bg-gray-50"}`}>Announcements</button>
+          <button onClick={() => setActiveTab("messages")} className={`flex-1 py-4 px-6 text-center font-bold text-sm uppercase tracking-wider transition-colors ${activeTab === "messages" ? "bg-primary text-white" : "text-gray-600 hover:bg-gray-50"}`}>Messages</button>
         </div>
 
         {/* Tab Content */}
@@ -279,6 +294,21 @@ export default function AdminPortal() {
             </div>
           </div>
         )}
+
+        {activeTab === "messages" && (
+          <div className="bg-white p-6 rounded-xl shadow-md">
+            <h3 className="text-xl font-bold text-primary mb-6 border-b pb-2">Contact Form Messages</h3>
+            {contactMessages.length === 0 ? (
+              <p className="text-gray-500 text-sm">No messages found.</p>
+            ) : (
+              <div className="space-y-6">
+                {contactMessages.map((msg) => (
+                  <RequestCard key={msg.id} request={msg} collectionName="contact_messages" onUpdateStatus={updateStatus} onAddComment={addComment} type={`Message: ${msg.subject}`} />
+                ))}
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
@@ -297,8 +327,9 @@ function RequestCard({ request, collectionName, onUpdateStatus, onAddComment, ty
   const isMaintenance = collectionName === "maintenance_requests";
   const isApplication = collectionName === "applications";
   const isNavigator = collectionName === "navigator_referrals";
+  const isMessage = collectionName === "contact_messages";
 
-  const name = isMaintenance ? request.userEmail : `${request.clientFirstName || request.firstName || ""} ${request.clientLastName || request.lastName || ""}`.trim();
+  const name = isMaintenance ? request.userEmail : isMessage ? `${request.firstName} ${request.lastName}` : `${request.clientFirstName || request.firstName || ""} ${request.clientLastName || request.lastName || ""}`.trim();
   const date = request.submittedAt ? new Date(request.submittedAt) : request.createdAt?.seconds ? new Date(request.createdAt.seconds * 1000) : new Date();
 
   return (
@@ -361,6 +392,13 @@ function RequestCard({ request, collectionName, onUpdateStatus, onAddComment, ty
             {request.roomPreference && <div><strong>Room Pref:</strong> {request.roomPreference}</div>}
             {request.clientHasPayee && <div><strong>Payee:</strong> Yes ({request.payeeRentPercentage})</div>}
             {request.navigatorName && <div className="col-span-2 mt-2 pt-2 border-t border-gray-200"><strong>Navigator:</strong> {request.navigatorName} ({request.navigatorEmail})</div>}
+          </>
+        )}
+
+        {isMessage && (
+          <>
+            {request.email && <div><strong>Email:</strong> {request.email}</div>}
+            {request.message && <div className="col-span-2 mt-2 pt-2 border-t border-gray-200"><strong>Message:</strong> <br/><span className="whitespace-pre-wrap">{request.message}</span></div>}
           </>
         )}
       </div>
