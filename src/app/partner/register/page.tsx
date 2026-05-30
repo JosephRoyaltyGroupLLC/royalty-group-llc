@@ -2,25 +2,15 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { auth, db } from "@/lib/firebase";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { doc, setDoc, serverTimestamp } from "firebase/firestore";
+import { auth, db, googleProvider } from "@/lib/firebase";
+import { signInWithPopup } from "firebase/auth";
+import { doc, setDoc, getDoc, serverTimestamp } from "firebase/firestore";
 
 export default function PartnerRegisterPage() {
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    companyName: ""
-  });
+  const [companyName, setCompanyName] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,23 +18,26 @@ export default function PartnerRegisterPage() {
     setError("");
 
     try {
-      // 1. Create User in Firebase Auth
-      const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
-      const user = userCredential.user;
+      // 1. Sign in with Google
+      const result = await signInWithPopup(auth, googleProvider);
+      const user = result.user;
 
-      await updateProfile(user, {
-        displayName: `${formData.firstName} ${formData.lastName}`
-      });
+      // Check if partner document already exists to avoid overwriting
+      const docRef = doc(db, "partners", user.uid);
+      const docSnap = await getDoc(docRef);
 
-      // 2. Save Partner Info in Firestore
-      await setDoc(doc(db, "partners", user.uid), {
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        email: formData.email,
-        companyName: formData.companyName,
-        subscriptionStatus: "inactive",
-        createdAt: serverTimestamp()
-      });
+      if (!docSnap.exists()) {
+        // 2. Save new Partner Info in Firestore
+        const names = user.displayName?.split(" ") || ["", ""];
+        await setDoc(docRef, {
+          firstName: names[0] || "",
+          lastName: names.slice(1).join(" ") || "",
+          email: user.email,
+          companyName: companyName,
+          subscriptionStatus: "inactive",
+          createdAt: serverTimestamp()
+        });
+      }
 
       // 3. Initiate Stripe Checkout for 30-Day Free Trial
       const res = await fetch("/api/stripe/checkout", {
@@ -82,37 +75,30 @@ export default function PartnerRegisterPage() {
         {error && <div className="mb-4 p-3 bg-red-100 text-red-700 rounded text-sm">{error}</div>}
 
         <form onSubmit={handleRegister} className="space-y-5">
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">First Name</label>
-              <input required type="text" name="firstName" value={formData.firstName} onChange={handleChange} className="w-full p-2 border border-gray-300 rounded focus:ring-secondary focus:border-secondary" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
-              <input required type="text" name="lastName" value={formData.lastName} onChange={handleChange} className="w-full p-2 border border-gray-300 rounded focus:ring-secondary focus:border-secondary" />
-            </div>
-          </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Company Name (Optional)</label>
-            <input type="text" name="companyName" value={formData.companyName} onChange={handleChange} className="w-full p-2 border border-gray-300 rounded focus:ring-secondary focus:border-secondary" />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
-            <input required type="email" name="email" value={formData.email} onChange={handleChange} className="w-full p-2 border border-gray-300 rounded focus:ring-secondary focus:border-secondary" />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
-            <input required type="password" name="password" minLength={6} value={formData.password} onChange={handleChange} className="w-full p-2 border border-gray-300 rounded focus:ring-secondary focus:border-secondary" />
+            <input 
+              type="text" 
+              value={companyName} 
+              onChange={(e) => setCompanyName(e.target.value)} 
+              className="w-full p-2 border border-gray-300 rounded focus:ring-secondary focus:border-secondary" 
+              placeholder="e.g. Acme Properties LLC"
+            />
           </div>
 
           <button 
             type="submit" 
             disabled={loading}
-            className="w-full py-3 px-4 bg-secondary text-white font-bold rounded hover:bg-opacity-90 transition-colors disabled:opacity-70 mt-6"
+            className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors mt-6"
           >
-            {loading ? "Creating Account..." : "Start 30-Day Free Trial"}
+            <span className="absolute left-0 inset-y-0 flex items-center pl-3">
+              <svg className="h-5 w-5 text-secondary group-hover:text-secondary-light" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12.545,10.239v3.821h5.445c-0.712,2.315-2.647,3.972-5.445,3.972c-3.332,0-6.033-2.701-6.033-6.032s2.701-6.032,6.033-6.032c1.498,0,2.866,0.549,3.921,1.453l2.814-2.814C17.503,2.988,15.139,2,12.545,2C7.021,2,2.543,6.477,2.543,12s4.478,10,10.002,10c8.396,0,10.249-7.85,9.426-11.748L12.545,10.239z"/>
+              </svg>
+            </span>
+            {loading ? "Creating Account..." : "Register with Google & Start Trial"}
           </button>
-          <p className="text-xs text-center text-gray-500 mt-4">You will be redirected to Stripe securely to enter payment details. You will not be charged until the end of your 30-day trial.</p>
+          <p className="text-xs text-center text-gray-500 mt-4">You will authenticate with Google, then be redirected to Stripe securely to enter payment details. You will not be charged until the end of your 30-day trial.</p>
         </form>
       </div>
     </div>
