@@ -17,9 +17,9 @@ const Navbar = () => {
               <Image 
                 src="/logo.png" 
                 alt="Royalty Group LLC Logo" 
-                width={150} 
-                height={50} 
-                className="h-12 w-auto object-contain"
+                width={250} 
+                height={80} 
+                className="h-16 w-auto object-contain"
                 priority
               />
             </Link>
