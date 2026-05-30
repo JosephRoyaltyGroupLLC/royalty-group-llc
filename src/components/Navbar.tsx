@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import React, { useState } from "react";
 
 const Navbar = () => {
@@ -13,10 +14,14 @@ const Navbar = () => {
           {/* Logo Section */}
           <div className="flex-shrink-0">
             <Link href="/" className="flex items-center gap-2">
-              <span className="text-2xl font-bold text-primary tracking-tight">
-                Royalty Group
-                <span className="text-secondary"> LLC</span>
-              </span>
+              <Image 
+                src="/logo.png" 
+                alt="Royalty Group LLC Logo" 
+                width={150} 
+                height={50} 
+                className="h-12 w-auto object-contain"
+                priority
+              />
             </Link>
           </div>
 
