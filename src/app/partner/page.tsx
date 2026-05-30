@@ -88,6 +88,32 @@ export default function PartnerDashboard() {
     }
   };
 
+  const handleManageBilling = async () => {
+    if (!partnerData?.stripeCustomerId) {
+      alert("No active billing profile found.");
+      return;
+    }
+    try {
+      const res = await fetch("/api/stripe/portal", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          customerId: partnerData.stripeCustomerId,
+          returnUrl: `${window.location.origin}/partner`
+        })
+      });
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        alert("Failed to open billing portal");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Error opening billing portal");
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex justify-center items-center">
@@ -110,6 +136,14 @@ export default function PartnerDashboard() {
             <p className="text-gray-600">Welcome back, {partnerData.firstName} {partnerData.lastName}</p>
           </div>
           <div className="flex gap-4 mt-4 md:mt-0">
+            {isActive && partnerData.stripeCustomerId && (
+              <button 
+                onClick={handleManageBilling}
+                className="px-4 py-2 border border-secondary text-secondary rounded text-sm font-bold hover:bg-secondary hover:text-white transition-colors"
+              >
+                Manage Billing
+              </button>
+            )}
             <button 
               onClick={handleSignOut}
               className="px-4 py-2 border border-gray-300 rounded text-sm font-bold text-gray-700 hover:bg-gray-100 transition-colors"
