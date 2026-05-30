@@ -4,15 +4,10 @@ import { db } from '@/lib/firebase';
 import { doc, updateDoc, setDoc } from 'firebase/firestore';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
-  apiVersion: '2025-02-24.acacia',
+  apiVersion: '2026-05-27.dahlia',
 });
 
-// Stripe requires the raw body to construct the event
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
+
 
 export async function POST(req: Request) {
   const body = await req.text();
