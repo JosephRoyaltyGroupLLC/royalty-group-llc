@@ -10,16 +10,16 @@ const Navbar = () => {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white/80 backdrop-blur-md">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex h-20 items-center justify-between">
+        <div className="flex h-28 items-center justify-between">
           {/* Logo Section */}
           <div className="flex-shrink-0">
             <Link href="/" className="flex items-center gap-2">
               <Image 
                 src="/logo.png" 
                 alt="Royalty Group LLC Logo" 
-                width={250} 
-                height={80} 
-                className="h-16 w-auto object-contain"
+                width={350} 
+                height={100} 
+                className="h-24 w-auto object-contain"
                 priority
               />
             </Link>
