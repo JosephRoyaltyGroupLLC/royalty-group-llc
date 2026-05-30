@@ -37,6 +37,9 @@ const Navbar = () => {
             <Link href="/contractor-services" className="text-sm font-medium text-foreground hover:text-secondary transition-colors">
               Contractor Services
             </Link>
+            <Link href="/partner-listings" className="text-sm font-medium text-foreground hover:text-secondary transition-colors">
+              Partner Listings
+            </Link>
             <Link href="/contact" className="text-sm font-medium text-foreground hover:text-secondary transition-colors">
               Contact Us
             </Link>
@@ -55,6 +58,12 @@ const Navbar = () => {
               className="inline-flex h-10 items-center justify-center rounded-md border border-primary px-6 text-sm font-medium text-primary shadow-sm transition-colors hover:bg-primary hover:text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary"
             >
               Portal Login
+            </Link>
+            <Link 
+              href="/partner/register" 
+              className="inline-flex h-10 items-center justify-center rounded-md border border-secondary px-6 text-sm font-medium text-secondary shadow-sm transition-colors hover:bg-secondary hover:text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-secondary"
+            >
+              Partner Portal
             </Link>
           </div>
 
@@ -82,6 +91,7 @@ const Navbar = () => {
               <Link href="/housing" onClick={() => setIsMobileMenuOpen(false)} className="text-base font-medium text-foreground hover:text-secondary px-2 py-1">Housing Options</Link>
               <Link href="/properties" onClick={() => setIsMobileMenuOpen(false)} className="text-base font-medium text-foreground hover:text-secondary px-2 py-1">Properties</Link>
               <Link href="/contractor-services" onClick={() => setIsMobileMenuOpen(false)} className="text-base font-medium text-foreground hover:text-secondary px-2 py-1">Contractor Services</Link>
+              <Link href="/partner-listings" onClick={() => setIsMobileMenuOpen(false)} className="text-base font-medium text-foreground hover:text-secondary px-2 py-1">Partner Listings</Link>
               <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)} className="text-base font-medium text-foreground hover:text-secondary px-2 py-1">Contact Us</Link>
               
               <div className="border-t border-gray-100 pt-4 flex flex-col space-y-3 px-2">
@@ -98,6 +108,13 @@ const Navbar = () => {
                   className="w-full inline-flex h-10 items-center justify-center rounded-md border border-primary px-6 text-sm font-medium text-primary shadow-sm transition-colors hover:bg-primary hover:text-white"
                 >
                   Portal Login
+                </Link>
+                <Link 
+                  href="/partner/register" 
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="w-full inline-flex h-10 items-center justify-center rounded-md border border-secondary px-6 text-sm font-medium text-secondary shadow-sm transition-colors hover:bg-secondary hover:text-white"
+                >
+                  Partner Portal
                 </Link>
               </div>
             </div>
