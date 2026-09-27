@@ -99,7 +99,7 @@ export default function NewPartnerProperty() {
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Price Info</label>
-              <input required type="text" name="price" value={formData.price} onChange={handleChange} placeholder="e.g. $1,100 Shared / $1,800 Private" className="w-full p-2 border border-gray-300 rounded focus:ring-secondary focus:border-secondary" />
+              <input required type="text" name="price" value={formData.price} onChange={handleChange} placeholder="e.g. $1,100 Shared / $2,400 Private" className="w-full p-2 border border-gray-300 rounded focus:ring-secondary focus:border-secondary" />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Full Address</label>

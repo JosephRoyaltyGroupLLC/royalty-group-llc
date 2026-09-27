@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { propertiesData } from "@/lib/propertiesData";
+import PropertyMapWrapper from "@/components/PropertyMapWrapper";
 
 export default function PropertiesPage() {
   const properties = propertiesData;
@@ -15,6 +16,11 @@ export default function PropertiesPage() {
             Explore our beautifully maintained homes in Oceanside. Each property is designed to foster community, safety, and comfort.
           </p>
         </div>
+      </section>
+
+      {/* Map Section */}
+      <section className="h-[400px] w-full bg-gray-300 relative z-0">
+        <PropertyMapWrapper />
       </section>
 
       {/* Property Grid */}

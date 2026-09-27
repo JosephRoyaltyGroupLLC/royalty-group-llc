@@ -12,19 +12,20 @@ const Footer = () => {
               Royalty Group LLC
             </h3>
             <p className="text-sm text-gray-300">
-              Independent living provider specializing in housing for seniors and adults with disabilities in Oceanside, California.
+              A premier multi-faceted company dedicated to excellence across housing, contractor services, cleaning, maintenance, AI, and information services.
             </p>
           </div>
 
           {/* Quick Links */}
           <div className="space-y-4">
-            <h4 className="text-lg font-semibold border-b border-gray-600 pb-2">Quick Links</h4>
+            <h4 className="text-lg font-semibold border-b border-gray-600 pb-2">Our Divisions</h4>
             <ul className="space-y-2">
-              <li><Link href="/about" className="text-sm text-gray-300 hover:text-secondary transition-colors">About Us</Link></li>
-              <li><Link href="/independent-living" className="text-sm text-gray-300 hover:text-secondary transition-colors">Independent Living</Link></li>
-              <li><Link href="/housing" className="text-sm text-gray-300 hover:text-secondary transition-colors">Housing Options</Link></li>
-              <li><Link href="/properties" className="text-sm text-gray-300 hover:text-secondary transition-colors">Available Properties</Link></li>
-              <li><Link href="/contractor-services" className="text-sm text-gray-300 hover:text-secondary transition-colors">Contractor Services</Link></li>
+              <li><Link href="/homes" className="text-sm text-gray-300 hover:text-secondary transition-colors">Royalty Group Homes</Link></li>
+              <li><Link href="/contractor-services" className="text-sm text-gray-300 hover:text-secondary transition-colors">Contracting Services</Link></li>
+              <li><Link href="/cleaning" className="text-sm text-gray-300 hover:text-secondary transition-colors">Cleaning Services</Link></li>
+              <li><Link href="/maintenance" className="text-sm text-gray-300 hover:text-secondary transition-colors">Maintenance</Link></li>
+              <li><Link href="/ai" className="text-sm text-gray-300 hover:text-secondary transition-colors">Artificial Intelligence</Link></li>
+              <li><Link href="/information-services" className="text-sm text-gray-300 hover:text-secondary transition-colors">Information Services</Link></li>
             </ul>
           </div>
 
@@ -44,7 +45,8 @@ const Footer = () => {
             <address className="not-italic text-sm text-gray-300 space-y-2">
               <p>Oceanside, CA</p>
               <p>Email: info@royaltygroupllc.net</p>
-              {/* Phone number could go here */}
+              <p>Phone: (760) 248-8331</p>
+              <p>Joseph Surgeon: (760) 330-7447</p>
             </address>
           </div>
         </div>

@@ -119,7 +119,7 @@ export default function ApplyPage() {
             <div id="online-application" className="bg-white p-8 rounded-xl shadow-xl">
               <div className="mb-8">
                 <h2 className="text-3xl font-extrabold text-primary text-center">Online Application</h2>
-                <div className="mt-4 flex justify-between items-center text-sm font-medium text-gray-500">
+                <div className="mt-4 flex flex-col sm:flex-row justify-between sm:items-center text-sm font-medium text-gray-500 gap-2 sm:gap-0">
                   <span className={step >= 1 ? "text-secondary" : ""}>1. Personal Info</span>
                   <span className={step >= 2 ? "text-secondary" : ""}>2. Housing Preferences</span>
                   <span className={step >= 3 ? "text-secondary" : ""}>3. Emergency Contact</span>

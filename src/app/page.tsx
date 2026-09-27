@@ -9,83 +9,131 @@ export default function Home() {
         <div className="absolute inset-0 z-0 opacity-40 bg-[url('https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&q=80')] bg-cover bg-center" />
         <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
           <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 tracking-tight drop-shadow-lg">
-            Welcome to <span className="text-secondary">Royalty Group Homes</span>
+            Welcome to <span className="text-secondary">Royalty Group LLC</span>
           </h1>
           <p className="text-xl md:text-2xl text-gray-200 mb-10 drop-shadow-md">
-            Premium independent living for seniors and adults with disabilities in beautiful Oceanside, California.
+            A premier multi-faceted company dedicated to excellence across housing, contractor services, cleaning, maintenance, AI, and information services.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Link 
-              href="/properties" 
+              href="#divisions" 
               className="px-8 py-4 bg-secondary hover:bg-secondary-light text-white font-semibold rounded-md shadow-lg transition-all text-lg"
             >
-              View Our Homes
+              Explore Our Divisions
             </Link>
             <Link 
-              href="/apply" 
+              href="/contact" 
               className="px-8 py-4 bg-white hover:bg-gray-100 text-primary font-semibold rounded-md shadow-lg transition-all text-lg"
             >
-              Apply for Housing
+              Contact Us
             </Link>
           </div>
         </div>
       </section>
 
-      {/* Services/Highlights Section */}
-      <section className="py-20 bg-muted">
+      {/* Corporate Divisions Section */}
+      <section id="divisions" className="py-20 bg-muted">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-4xl font-bold text-primary mb-6">Affordable Community Shared Living</h2>
+            <h2 className="text-4xl font-bold text-primary mb-6">Our Divisions</h2>
             <p className="text-lg text-gray-700">
-              We offer both shared and private rooms designed to provide comfort, safety, and a sense of community. Our properties are fully equipped with modern amenities to ensure a premium living experience.
+              Royalty Group LLC operates multiple specialized divisions, each committed to delivering premium quality, unparalleled service, and innovative solutions to our clients.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {/* Shared Rooms */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Division 1: Homes */}
             <div className="bg-white rounded-xl shadow-xl overflow-hidden group hover:shadow-2xl transition-all duration-300">
-              <div className="h-64 bg-gray-300 relative overflow-hidden">
-                <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&q=80')] bg-cover bg-center group-hover:scale-105 transition-transform duration-500" />
+              <div className="h-48 bg-gray-300 relative overflow-hidden">
+                <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&q=80')] bg-cover bg-center group-hover:scale-105 transition-transform duration-500" />
               </div>
-              <div className="p-8">
-                <h3 className="text-2xl font-bold text-primary mb-4">Shared Rooms</h3>
-                <p className="text-gray-600 mb-6">
-                  Enjoy the company of others in our spacious shared rooms. Perfect for those who thrive in a social environment while maintaining personal comfort and affordability.
+              <div className="p-6">
+                <h3 className="text-xl font-bold text-primary mb-3">Royalty Group Homes</h3>
+                <p className="text-gray-600 mb-4 text-sm">
+                  Premium independent living communities and housing solutions designed for comfort, safety, and a vibrant sense of community.
                 </p>
-                <Link href="/housing#shared-rooms" className="text-secondary font-semibold hover:text-primary transition-colors flex items-center gap-2">
-                  Learn more &rarr;
+                <Link href="/homes" className="text-secondary font-semibold hover:text-primary transition-colors flex items-center gap-2 text-sm">
+                  Explore Homes &rarr;
                 </Link>
               </div>
             </div>
 
-            {/* Private Rooms */}
+            {/* Division 2: Contracting */}
             <div className="bg-white rounded-xl shadow-xl overflow-hidden group hover:shadow-2xl transition-all duration-300">
-              <div className="h-64 bg-gray-300 relative overflow-hidden">
-                <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80')] bg-cover bg-center group-hover:scale-105 transition-transform duration-500" />
+              <div className="h-48 bg-gray-300 relative overflow-hidden">
+                <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80')] bg-cover bg-center group-hover:scale-105 transition-transform duration-500" />
               </div>
-              <div className="p-8">
-                <h3 className="text-2xl font-bold text-primary mb-4">Private Rooms</h3>
-                <p className="text-gray-600 mb-6">
-                  For residents seeking more independence and privacy, our private rooms offer a personal sanctuary with all the benefits of our supportive community environment.
+              <div className="p-6">
+                <h3 className="text-xl font-bold text-primary mb-3">Royalty Group Contracting</h3>
+                <p className="text-gray-600 mb-4 text-sm">
+                  Expert contractor services, lite construction, and professional renovations tailored to meet the highest industry standards.
                 </p>
-                <Link href="/housing#private-rooms" className="text-secondary font-semibold hover:text-primary transition-colors flex items-center gap-2">
-                  Learn more &rarr;
+                <Link href="/contractor-services" className="text-secondary font-semibold hover:text-primary transition-colors flex items-center gap-2 text-sm">
+                  Explore Contracting &rarr;
                 </Link>
               </div>
             </div>
 
-            {/* Contractor Services */}
+            {/* Division 3: Cleaning */}
             <div className="bg-white rounded-xl shadow-xl overflow-hidden group hover:shadow-2xl transition-all duration-300">
-              <div className="h-64 bg-gray-300 relative overflow-hidden">
-                <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=800&q=80')] bg-cover bg-center group-hover:scale-105 transition-transform duration-500" />
+              <div className="h-48 bg-gray-300 relative overflow-hidden">
+                <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&q=80')] bg-cover bg-center group-hover:scale-105 transition-transform duration-500" />
               </div>
-              <div className="p-8">
-                <h3 className="text-2xl font-bold text-primary mb-4">Contractor Services</h3>
-                <p className="text-gray-600 mb-6">
-                  We broker professional and reliable contractor services including handyman repairs, commercial cleaning, property maintenance, and lite construction.
+              <div className="p-6">
+                <h3 className="text-xl font-bold text-primary mb-3">Royalty Group Cleaning</h3>
+                <p className="text-gray-600 mb-4 text-sm">
+                  Comprehensive residential and commercial cleaning services that ensure a spotless and healthy environment.
                 </p>
-                <Link href="/contractor-services" className="text-secondary font-semibold hover:text-primary transition-colors flex items-center gap-2">
-                  Learn more &rarr;
+                <Link href="/cleaning" className="text-secondary font-semibold hover:text-primary transition-colors flex items-center gap-2 text-sm">
+                  Explore Cleaning &rarr;
+                </Link>
+              </div>
+            </div>
+
+            {/* Division 4: Maintenance */}
+            <div className="bg-white rounded-xl shadow-xl overflow-hidden group hover:shadow-2xl transition-all duration-300">
+              <div className="h-48 bg-gray-300 relative overflow-hidden">
+                <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&q=80')] bg-cover bg-center group-hover:scale-105 transition-transform duration-500" />
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-bold text-primary mb-3">Royalty Group Maintenance</h3>
+                <p className="text-gray-600 mb-4 text-sm">
+                  Reliable property maintenance and handyman repairs to keep your assets in pristine condition year-round.
+                </p>
+                <Link href="/maintenance" className="text-secondary font-semibold hover:text-primary transition-colors flex items-center gap-2 text-sm">
+                  Explore Maintenance &rarr;
+                </Link>
+              </div>
+            </div>
+
+            {/* Division 5: AI */}
+            <div className="bg-white rounded-xl shadow-xl overflow-hidden group hover:shadow-2xl transition-all duration-300">
+              <div className="h-48 bg-gray-300 relative overflow-hidden">
+                <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&q=80')] bg-cover bg-center group-hover:scale-105 transition-transform duration-500" />
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-bold text-primary mb-3">Royalty Group AI</h3>
+                <p className="text-gray-600 mb-4 text-sm">
+                  Cutting-edge artificial intelligence solutions and automation systems to drive efficiency and modern growth.
+                </p>
+                <Link href="/ai" className="text-secondary font-semibold hover:text-primary transition-colors flex items-center gap-2 text-sm">
+                  Explore AI &rarr;
+                </Link>
+              </div>
+            </div>
+
+            {/* Division 6: Information Services */}
+            <div className="bg-white rounded-xl shadow-xl overflow-hidden group hover:shadow-2xl transition-all duration-300">
+              <div className="h-48 bg-gray-300 relative overflow-hidden">
+                <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80')] bg-cover bg-center group-hover:scale-105 transition-transform duration-500" />
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-bold text-primary mb-3">Royalty Group Information Services</h3>
+                <p className="text-gray-600 mb-4 text-sm">
+                  Secure IT infrastructure, data management, and specialized technological consulting for modern enterprises.
+                </p>
+                <Link href="/information-services" className="text-secondary font-semibold hover:text-primary transition-colors flex items-center gap-2 text-sm">
+                  Explore Info Services &rarr;
                 </Link>
               </div>
             </div>
@@ -93,21 +141,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Call to Action */}
-      <section className="py-24 bg-primary text-white text-center">
-        <div className="container mx-auto px-4 max-w-4xl">
-          <h2 className="text-4xl font-bold mb-6 text-secondary">Ready to Join Our Community?</h2>
-          <p className="text-xl text-gray-300 mb-10">
-            Submit your application today through our secure online portal and take the first step towards your new home.
-          </p>
-          <Link 
-            href="/login" 
-            className="inline-block px-10 py-4 bg-white text-primary font-bold rounded-md shadow-lg hover:bg-gray-100 transition-colors text-lg"
-          >
-            Create Your Profile to Apply
-          </Link>
-        </div>
-      </section>
     </div>
   );
 }
