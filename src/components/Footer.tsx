@@ -11,31 +11,31 @@ const Footer = () => {
             <h3 className="text-2xl font-bold tracking-tight text-secondary">
               Royalty Group LLC
             </h3>
-            <p className="text-sm text-gray-300">
+            <p className="text-sm text-gray-300 leading-relaxed">
               A premier multi-faceted company dedicated to excellence across housing, contractor services, cleaning, maintenance, AI, and information services.
             </p>
           </div>
 
           {/* Quick Links */}
           <div className="space-y-4">
-            <h4 className="text-lg font-semibold border-b border-gray-600 pb-2">Our Divisions</h4>
+            <h4 className="text-lg font-bold border-b border-gray-600 pb-2 uppercase tracking-wider text-gray-100">Our Services</h4>
             <ul className="space-y-2">
-              <li><Link href="/homes" className="text-sm text-gray-300 hover:text-secondary transition-colors">Royalty Group Homes</Link></li>
-              <li><Link href="/contractor-services" className="text-sm text-gray-300 hover:text-secondary transition-colors">Contracting Services</Link></li>
-              <li><Link href="/cleaning" className="text-sm text-gray-300 hover:text-secondary transition-colors">Cleaning Services</Link></li>
-              <li><Link href="/maintenance" className="text-sm text-gray-300 hover:text-secondary transition-colors">Maintenance</Link></li>
-              <li><Link href="/ai" className="text-sm text-gray-300 hover:text-secondary transition-colors">Artificial Intelligence</Link></li>
-              <li><Link href="/information-services" className="text-sm text-gray-300 hover:text-secondary transition-colors">Information Services</Link></li>
+              <li><Link href="/homes" className="text-sm text-gray-300 hover:text-secondary transition-colors font-medium">Property Management & Homes</Link></li>
+              <li><Link href="/contractor-services" className="text-sm text-gray-300 hover:text-secondary transition-colors font-medium">Contracting Services</Link></li>
+              <li><Link href="/cleaning" className="text-sm text-gray-300 hover:text-secondary transition-colors font-medium">Professional Cleaning</Link></li>
+              <li><Link href="/maintenance" className="text-sm text-gray-300 hover:text-secondary transition-colors font-medium">Maintenance & Upkeep</Link></li>
+              <li><Link href="/ai" className="text-sm text-gray-300 hover:text-secondary transition-colors font-medium">Artificial Intelligence</Link></li>
+              <li><Link href="/information-services" className="text-sm text-gray-300 hover:text-secondary transition-colors font-medium">Information Services</Link></li>
             </ul>
           </div>
 
           {/* Support */}
           <div className="space-y-4">
-            <h4 className="text-lg font-semibold border-b border-gray-600 pb-2">Support</h4>
+            <h4 className="text-lg font-bold border-b border-gray-600 pb-2 uppercase tracking-wider text-gray-100">Support</h4>
             <ul className="space-y-2">
-              <li><Link href="/apply" className="text-sm text-gray-300 hover:text-secondary transition-colors">Apply for Housing</Link></li>
-              <li><Link href="/contact" className="text-sm text-gray-300 hover:text-secondary transition-colors">Contact Us</Link></li>
-              <li><Link href="/portal" className="text-sm text-gray-300 hover:text-secondary transition-colors">Resident Portal</Link></li>
+              <li><Link href="/apply" className="text-sm text-gray-300 hover:text-secondary transition-colors font-medium">Apply for Housing</Link></li>
+              <li><Link href="/contact" className="text-sm text-gray-300 hover:text-secondary transition-colors font-medium">Contact Us</Link></li>
+              <li><Link href="/portal" className="text-sm text-gray-300 hover:text-secondary transition-colors font-medium">Resident Portal</Link></li>
             </ul>
           </div>
 

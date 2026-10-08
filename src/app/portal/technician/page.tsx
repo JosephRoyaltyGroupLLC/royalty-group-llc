@@ -6,7 +6,7 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { collection, query, where, orderBy, getDocs } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { PlusCircle, FileText, CheckCircle, Clock, XCircle, LogOut } from "lucide-react";
+import { PlusCircle, FileText, CheckCircle, Clock, XCircle, LogOut, PenTool, LayoutDashboard, Wrench } from "lucide-react";
 
 export default function TechnicianDashboard() {
   const [user, setUser] = useState<any>(null);
@@ -54,8 +54,8 @@ export default function TechnicianDashboard() {
 
   if (loading) {
     return (
-      <div className="flex-grow flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+      <div className="flex-grow flex items-center justify-center min-h-screen bg-white">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-secondary"></div>
       </div>
     );
   }
@@ -64,110 +64,110 @@ export default function TechnicianDashboard() {
 
   return (
     <div className="flex-grow bg-muted py-12 px-4 sm:px-6 lg:px-8 min-h-screen">
-      <div className="max-w-6xl mx-auto space-y-8">
+      <div className="max-w-7xl mx-auto space-y-8">
         {/* Header */}
-        <div className="bg-white p-8 rounded-xl shadow-md flex flex-col md:flex-row justify-between items-center border-b-4 border-secondary">
-          <div className="flex items-center space-x-4">
+        <div className="bg-white p-8 rounded-xl shadow-lg flex flex-col md:flex-row justify-between items-center border-t-4 border-primary">
+          <div className="flex items-center gap-6">
             {user.photoURL ? (
-              <img src={user.photoURL} alt="Profile" className="w-16 h-16 rounded-full border-2 border-secondary" />
+              <img src={user.photoURL} alt="Profile" className="w-16 h-16 rounded-full border-2 border-secondary shadow" />
             ) : (
-              <div className="w-16 h-16 rounded-full bg-primary text-white flex items-center justify-center text-2xl font-bold border-2 border-secondary">
-                {user.displayName?.charAt(0) || "T"}
+              <div className="w-16 h-16 rounded-full bg-primary text-secondary flex items-center justify-center text-3xl font-extrabold border-2 border-secondary shadow">
+                <Wrench size={30} />
               </div>
             )}
             <div>
-              <h2 className="text-2xl font-bold text-primary">Technician Portal</h2>
-              <p className="text-gray-600">{user.displayName || user.email}</p>
+              <h2 className="text-2xl font-extrabold text-primary uppercase tracking-wider mb-1">Technician Portal</h2>
+              <p className="text-gray-600 font-light">{user.displayName || user.email}</p>
             </div>
           </div>
           <button 
             onClick={handleSignOut}
-            className="mt-4 md:mt-0 flex items-center px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+            className="mt-6 md:mt-0 flex items-center gap-2 px-6 py-3 bg-gray-100 border border-gray-200 rounded text-sm font-bold text-gray-700 hover:bg-gray-200 transition-colors uppercase tracking-wider"
           >
-            <LogOut className="w-4 h-4 mr-2" />
+            <LogOut size={16} />
             Sign Out
           </button>
         </div>
 
         {/* Quick Actions */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Link href="/portal/technician/quotes/new" className="bg-white p-6 rounded-xl shadow-md border-t-4 border-secondary hover:shadow-lg transition-all flex items-center group">
-            <div className="bg-blue-50 p-4 rounded-full mr-4 group-hover:bg-blue-100 transition-colors">
-              <PlusCircle className="w-8 h-8 text-secondary" />
+          <Link href="/portal/technician/quotes/new" className="bg-white p-6 rounded-xl shadow-lg border-t-4 border-secondary hover:shadow-xl transition-all flex items-center group cursor-pointer">
+            <div className="bg-secondary/10 p-5 rounded-full mr-5 group-hover:bg-secondary group-hover:text-primary transition-colors text-secondary">
+              <PlusCircle className="w-8 h-8" />
             </div>
             <div>
-              <h3 className="font-bold text-gray-800 text-lg">New Quote</h3>
-              <p className="text-sm text-gray-500">Submit a new estimate</p>
+              <h3 className="font-extrabold text-primary text-lg uppercase tracking-wider">New Quote</h3>
+              <p className="text-sm text-gray-500 font-light">Submit a new estimate</p>
             </div>
           </Link>
           
-          <div className="bg-white p-6 rounded-xl shadow-md border-t-4 border-green-500 flex items-center">
-            <div className="bg-green-50 p-4 rounded-full mr-4">
+          <div className="bg-white p-6 rounded-xl shadow-lg border-t-4 border-green-500 flex items-center">
+            <div className="bg-green-50 p-5 rounded-full mr-5">
               <CheckCircle className="w-8 h-8 text-green-500" />
             </div>
             <div>
-              <h3 className="font-bold text-gray-800 text-lg">Approved</h3>
-              <p className="text-sm text-gray-500">{quotes.filter(q => q.status === 'approved').length} quotes</p>
+              <h3 className="font-extrabold text-primary text-lg uppercase tracking-wider">Approved</h3>
+              <p className="text-sm text-gray-500 font-bold uppercase tracking-wider">{quotes.filter(q => q.status === 'approved').length} quotes</p>
             </div>
           </div>
 
-          <div className="bg-white p-6 rounded-xl shadow-md border-t-4 border-yellow-500 flex items-center">
-            <div className="bg-yellow-50 p-4 rounded-full mr-4">
+          <div className="bg-white p-6 rounded-xl shadow-lg border-t-4 border-yellow-500 flex items-center">
+            <div className="bg-yellow-50 p-5 rounded-full mr-5">
               <Clock className="w-8 h-8 text-yellow-500" />
             </div>
             <div>
-              <h3 className="font-bold text-gray-800 text-lg">Pending</h3>
-              <p className="text-sm text-gray-500">{quotes.filter(q => q.status === 'pending').length} quotes</p>
+              <h3 className="font-extrabold text-primary text-lg uppercase tracking-wider">Pending</h3>
+              <p className="text-sm text-gray-500 font-bold uppercase tracking-wider">{quotes.filter(q => q.status === 'pending').length} quotes</p>
             </div>
           </div>
         </div>
 
         {/* Quotes List */}
-        <div className="bg-white p-8 rounded-xl shadow-md">
-          <div className="flex justify-between items-center mb-6">
-            <h3 className="text-2xl font-bold text-primary flex items-center">
-              <FileText className="w-6 h-6 mr-2" />
+        <div className="bg-white p-8 rounded-xl shadow-lg border-t-4 border-primary">
+          <div className="flex justify-between items-center mb-8 border-b border-gray-100 pb-4">
+            <h3 className="text-2xl font-extrabold text-primary flex items-center gap-3 uppercase tracking-wider">
+              <FileText className="w-6 h-6 text-secondary" />
               My Quotes
             </h3>
           </div>
           
           {loadingData ? (
-             <div className="flex justify-center py-8">
-               <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary"></div>
+             <div className="flex justify-center py-16">
+               <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-secondary"></div>
              </div>
           ) : quotes.length > 0 ? (
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto rounded-lg border border-gray-200">
               <table className="w-full text-left border-collapse">
-                <thead>
-                  <tr className="bg-gray-50 text-gray-700 text-sm">
-                    <th className="p-3 border-b">Date</th>
-                    <th className="p-3 border-b">Property Address</th>
-                    <th className="p-3 border-b">Total Items</th>
-                    <th className="p-3 border-b">Total Price</th>
-                    <th className="p-3 border-b">Status</th>
+                <thead className="bg-gray-50">
+                  <tr className="text-gray-700 text-xs font-bold uppercase tracking-wider border-b border-gray-200">
+                    <th className="p-4">Date</th>
+                    <th className="p-4">Property Address</th>
+                    <th className="p-4">Total Items</th>
+                    <th className="p-4">Total Price</th>
+                    <th className="p-4">Status</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className="divide-y divide-gray-100">
                   {quotes.map((quote) => {
                     const totalItems = quote.lineItems?.length || 0;
                     const totalPrice = quote.lineItems?.reduce((sum: number, item: any) => sum + (Number(item.technicianPrice) || 0), 0) || 0;
                     
                     return (
-                      <tr key={quote.id} className="border-b hover:bg-gray-50 transition-colors">
-                        <td className="p-3 text-sm text-gray-600">
+                      <tr key={quote.id} className="hover:bg-primary/5 transition-colors">
+                        <td className="p-4 text-sm text-gray-600 font-medium">
                           {quote.createdAt?.toDate ? quote.createdAt.toDate().toLocaleDateString() : new Date(quote.createdAt).toLocaleDateString()}
                         </td>
-                        <td className="p-3">
-                          <p className="font-medium text-gray-800">{quote.address}</p>
+                        <td className="p-4">
+                          <p className="font-bold text-gray-900">{quote.address}</p>
                         </td>
-                        <td className="p-3 text-gray-600">
+                        <td className="p-4 text-gray-600 font-light">
                           {totalItems} items
                         </td>
-                        <td className="p-3 font-medium text-gray-800">
+                        <td className="p-4 font-bold text-primary">
                           ${totalPrice.toFixed(2)}
                         </td>
-                        <td className="p-3">
-                          <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold ${
+                        <td className="p-4">
+                          <span className={`inline-flex items-center px-3 py-1 rounded text-xs font-bold uppercase tracking-wider shadow-sm ${
                             quote.status === "pending" ? "bg-yellow-100 text-yellow-800" :
                             quote.status === "approved" ? "bg-green-100 text-green-800" :
                             "bg-red-100 text-red-800"
@@ -175,7 +175,7 @@ export default function TechnicianDashboard() {
                             {quote.status === "pending" && <Clock className="w-3 h-3 mr-1" />}
                             {quote.status === "approved" && <CheckCircle className="w-3 h-3 mr-1" />}
                             {quote.status === "rejected" && <XCircle className="w-3 h-3 mr-1" />}
-                            {quote.status.charAt(0).toUpperCase() + quote.status.slice(1)}
+                            {quote.status}
                           </span>
                         </td>
                       </tr>
@@ -185,12 +185,12 @@ export default function TechnicianDashboard() {
               </table>
             </div>
           ) : (
-            <div className="text-center py-12 bg-gray-50 rounded-lg border border-dashed border-gray-300">
-              <FileText className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-              <p className="text-gray-600 mb-4 text-lg">You haven't submitted any quotes yet.</p>
+            <div className="text-center py-16 bg-gray-50 rounded-lg border-2 border-dashed border-gray-200">
+              <PenTool className="w-12 h-12 text-gray-300 mx-auto mb-4" />
+              <p className="text-gray-500 mb-6 font-light">You haven't submitted any quotes yet.</p>
               <Link 
                 href="/portal/technician/quotes/new" 
-                className="inline-flex items-center px-6 py-3 bg-secondary text-white font-medium rounded-md hover:bg-opacity-90 transition-colors shadow-sm"
+                className="inline-flex items-center px-6 py-3 bg-secondary text-primary font-bold uppercase tracking-wider rounded shadow hover:bg-secondary-light transition-colors"
               >
                 <PlusCircle className="w-5 h-5 mr-2" />
                 Create Your First Quote

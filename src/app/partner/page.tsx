@@ -6,6 +6,7 @@ import { auth, db } from "@/lib/firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { collection, query, where, getDocs, doc, getDoc } from "firebase/firestore";
 import Link from "next/link";
+import { Building, MapPin, Handshake, LogOut, Settings, CreditCard, ChevronRight, MessageSquare, AlertTriangle } from "lucide-react";
 
 export default function PartnerDashboard() {
   const [user, setUser] = useState<any>(null);
@@ -116,8 +117,8 @@ export default function PartnerDashboard() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex justify-center items-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+      <div className="min-h-screen flex justify-center items-center bg-white">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-secondary"></div>
       </div>
     );
   }
@@ -128,26 +129,33 @@ export default function PartnerDashboard() {
 
   return (
     <div className="min-h-screen bg-muted py-12 px-4">
-      <div className="max-w-6xl mx-auto space-y-8">
+      <div className="max-w-7xl mx-auto space-y-8">
         {/* Header */}
-        <div className="bg-white p-8 rounded-xl shadow-md flex flex-col md:flex-row justify-between items-center border-t-4 border-primary">
-          <div>
-            <h2 className="text-3xl font-bold text-primary">Partner Dashboard</h2>
-            <p className="text-gray-600">Welcome back, {partnerData.firstName} {partnerData.lastName}</p>
+        <div className="bg-white p-8 rounded-xl shadow-lg flex flex-col md:flex-row justify-between items-center border-t-4 border-primary">
+          <div className="flex items-center gap-6">
+            <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center border-2 border-secondary shadow">
+              <Handshake className="w-8 h-8 text-primary" />
+            </div>
+            <div>
+              <h2 className="text-3xl font-extrabold text-primary uppercase tracking-wider mb-1">Partner Dashboard</h2>
+              <p className="text-gray-600 font-light">Welcome back, <span className="font-bold text-gray-900">{partnerData.firstName} {partnerData.lastName}</span></p>
+            </div>
           </div>
-          <div className="flex gap-4 mt-4 md:mt-0">
+          <div className="flex gap-4 mt-6 md:mt-0">
             {isActive && partnerData.stripeCustomerId && (
               <button 
                 onClick={handleManageBilling}
-                className="px-4 py-2 border border-secondary text-secondary rounded text-sm font-bold hover:bg-secondary hover:text-white transition-colors"
+                className="px-6 py-3 border-2 border-secondary text-secondary font-bold uppercase tracking-wider rounded text-sm hover:bg-secondary hover:text-white transition-colors flex items-center gap-2"
               >
+                <CreditCard size={16} />
                 Manage Billing
               </button>
             )}
             <button 
               onClick={handleSignOut}
-              className="px-4 py-2 border border-gray-300 rounded text-sm font-bold text-gray-700 hover:bg-gray-100 transition-colors"
+              className="px-6 py-3 bg-gray-100 border border-gray-200 rounded text-sm font-bold text-gray-700 hover:bg-gray-200 transition-colors uppercase tracking-wider flex items-center gap-2"
             >
+              <LogOut size={16} />
               Sign Out
             </button>
           </div>
@@ -155,12 +163,15 @@ export default function PartnerDashboard() {
 
         {/* Subscription Notice */}
         {!isActive && (
-          <div className="bg-red-50 border border-red-200 p-6 rounded-xl shadow-sm flex flex-col md:flex-row justify-between items-center">
-            <div>
-              <h3 className="text-xl font-bold text-red-700">Subscription Inactive</h3>
-              <p className="text-red-600 mt-1">Your properties are currently hidden from the public. Please subscribe to list your properties and receive leads.</p>
+          <div className="bg-red-50 border-l-4 border-red-500 p-8 rounded-xl shadow-md flex flex-col md:flex-row justify-between items-center gap-6">
+            <div className="flex items-start gap-4">
+              <AlertTriangle className="text-red-500 w-8 h-8 flex-shrink-0 mt-1" />
+              <div>
+                <h3 className="text-xl font-extrabold text-red-800 uppercase tracking-wider mb-1">Subscription Inactive</h3>
+                <p className="text-red-700 font-light">Your properties are currently hidden from the public. Please subscribe to list your properties and receive leads.</p>
+              </div>
             </div>
-            <button onClick={handleSubscribe} className="mt-4 md:mt-0 px-6 py-3 bg-red-600 text-white font-bold rounded-lg hover:bg-red-700 transition-colors shadow">
+            <button onClick={handleSubscribe} className="w-full md:w-auto px-8 py-4 bg-red-600 text-white font-bold uppercase tracking-wider rounded-lg hover:bg-red-700 transition-colors shadow-md">
               Start $9.99/mo Subscription
             </button>
           </div>
@@ -169,30 +180,35 @@ export default function PartnerDashboard() {
         {isActive && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Properties Section */}
-            <div className="bg-white p-6 rounded-xl shadow-md border border-gray-100">
-              <div className="flex justify-between items-center mb-6 border-b pb-2">
-                <h3 className="text-xl font-bold text-primary">My Properties</h3>
-                <Link href="/partner/properties/new" className="px-4 py-2 bg-secondary text-white text-sm font-bold rounded hover:bg-opacity-90">
+            <div className="bg-white p-8 rounded-xl shadow-lg border-t-4 border-secondary flex flex-col">
+              <div className="flex justify-between items-center mb-6 border-b border-gray-100 pb-4">
+                <h3 className="text-2xl font-extrabold text-primary uppercase tracking-wider flex items-center gap-3">
+                  <Building className="text-secondary w-6 h-6" /> My Properties
+                </h3>
+                <Link href="/partner/properties/new" className="px-5 py-2 bg-secondary text-primary text-xs font-bold uppercase tracking-wider rounded shadow hover:bg-secondary-light transition-colors">
                   + Add Property
                 </Link>
               </div>
               
               {properties.length === 0 ? (
-                <div className="text-center py-8">
-                  <p className="text-gray-500 mb-4">You haven't listed any properties yet.</p>
-                  <Link href="/partner/properties/new" className="text-secondary font-bold hover:underline">List your first property</Link>
+                <div className="text-center py-16 bg-gray-50 rounded-lg border-2 border-dashed border-gray-200 flex-grow flex flex-col items-center justify-center">
+                  <Building className="w-12 h-12 text-gray-300 mb-4" />
+                  <p className="text-gray-500 mb-4 font-light">You haven't listed any properties yet.</p>
+                  <Link href="/partner/properties/new" className="text-secondary font-bold hover:text-primary transition-colors uppercase tracking-wider text-sm flex items-center gap-1">
+                    List your first property <ChevronRight size={14} />
+                  </Link>
                 </div>
               ) : (
-                <div className="space-y-4">
+                <div className="space-y-4 max-h-[500px] overflow-y-auto pr-2">
                   {properties.map(prop => (
-                    <div key={prop.id} className="flex gap-4 border border-gray-200 p-4 rounded hover:shadow-sm transition-shadow">
-                      <div className="w-24 h-24 bg-gray-200 rounded shrink-0 overflow-hidden">
-                        {prop.image && <img src={prop.image} alt={prop.name} className="w-full h-full object-cover" />}
+                    <div key={prop.id} className="flex gap-5 border border-gray-100 bg-gray-50 p-4 rounded-lg hover:shadow-md transition-all group">
+                      <div className="w-24 h-24 bg-gray-200 rounded shrink-0 overflow-hidden shadow-inner border border-gray-200">
+                        {prop.image && <img src={prop.image} alt={prop.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />}
                       </div>
-                      <div>
-                        <h4 className="font-bold text-lg text-gray-900">{prop.name}</h4>
-                        <p className="text-sm text-gray-600">{prop.location}</p>
-                        <p className="text-sm font-semibold text-secondary mt-1">{prop.price}</p>
+                      <div className="flex flex-col justify-center">
+                        <h4 className="font-extrabold text-lg text-primary">{prop.name}</h4>
+                        <p className="text-xs font-bold text-gray-500 uppercase tracking-wider flex items-center gap-1 mt-1"><MapPin size={12} className="text-secondary" /> {prop.location}</p>
+                        <p className="text-sm font-extrabold text-secondary mt-2">{prop.price}</p>
                       </div>
                     </div>
                   ))}
@@ -201,26 +217,33 @@ export default function PartnerDashboard() {
             </div>
 
             {/* Referrals/Leads Section */}
-            <div className="bg-white p-6 rounded-xl shadow-md border border-gray-100">
-              <h3 className="text-xl font-bold text-primary mb-6 border-b pb-2">Property Inquiries & Leads</h3>
+            <div className="bg-white p-8 rounded-xl shadow-lg border-t-4 border-primary flex flex-col">
+              <h3 className="text-2xl font-extrabold text-primary mb-6 border-b border-gray-100 pb-4 flex items-center gap-3 uppercase tracking-wider">
+                <MessageSquare className="text-secondary w-6 h-6" /> Property Inquiries
+              </h3>
               
               {referrals.length === 0 ? (
-                <div className="text-center py-8">
-                  <p className="text-gray-500">No inquiries yet. Keep your listings updated to attract more residents!</p>
+                <div className="text-center py-16 bg-gray-50 rounded-lg border-2 border-dashed border-gray-200 flex-grow flex flex-col items-center justify-center">
+                  <MessageSquare className="w-12 h-12 text-gray-300 mb-4" />
+                  <p className="text-gray-500 font-light">No inquiries yet. Keep your listings updated to attract more residents!</p>
                 </div>
               ) : (
                 <div className="space-y-4 max-h-[500px] overflow-y-auto pr-2">
                   {referrals.map(ref => (
-                    <div key={ref.id} className="border border-gray-200 rounded p-4 bg-gray-50">
-                      <div className="flex justify-between items-start mb-2">
-                        <h4 className="font-bold text-gray-900">{ref.firstName} {ref.lastName}</h4>
-                        <span className="text-xs text-gray-500">{ref.createdAt?.seconds ? new Date(ref.createdAt.seconds * 1000).toLocaleDateString() : "New"}</span>
+                    <div key={ref.id} className="border border-gray-100 rounded-lg p-6 bg-gray-50 hover:shadow-md transition-all">
+                      <div className="flex justify-between items-start mb-4">
+                        <h4 className="font-extrabold text-primary text-lg">{ref.firstName} {ref.lastName}</h4>
+                        <span className="text-[10px] font-bold text-secondary uppercase tracking-wider bg-white px-2 py-1 rounded shadow-sm border border-gray-100">
+                          {ref.createdAt?.seconds ? new Date(ref.createdAt.seconds * 1000).toLocaleDateString() : "New"}
+                        </span>
                       </div>
-                      <p className="text-sm text-gray-700"><strong>Property:</strong> {ref.propertyName}</p>
-                      <p className="text-sm text-gray-700"><strong>Email:</strong> {ref.email}</p>
-                      <p className="text-sm text-gray-700"><strong>Phone:</strong> {ref.phone}</p>
-                      <div className="mt-2 pt-2 border-t border-gray-200">
-                        <p className="text-sm text-gray-600 italic">"{ref.message}"</p>
+                      <div className="space-y-2 mb-4">
+                        <p className="text-sm text-gray-700 font-medium"><span className="text-xs font-bold text-gray-400 uppercase tracking-wider w-20 inline-block">Property</span> {ref.propertyName}</p>
+                        <p className="text-sm text-gray-700 font-medium"><span className="text-xs font-bold text-gray-400 uppercase tracking-wider w-20 inline-block">Email</span> {ref.email}</p>
+                        <p className="text-sm text-gray-700 font-medium"><span className="text-xs font-bold text-gray-400 uppercase tracking-wider w-20 inline-block">Phone</span> {ref.phone}</p>
+                      </div>
+                      <div className="mt-4 pt-4 border-t border-gray-200">
+                        <p className="text-sm text-gray-600 font-light italic leading-relaxed">"{ref.message}"</p>
                       </div>
                     </div>
                   ))}
