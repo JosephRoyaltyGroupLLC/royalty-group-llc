@@ -78,7 +78,7 @@ export default function LoginPage() {
       if (err.message.includes("Access Denied")) {
          setError(err.message);
       } else {
-         setError("Failed to sign in with Google. Please try again.");
+         setError(`Google Sign-In Error: ${err.message || "Please try again."}`);
       }
     } finally {
       setLoading(false);
